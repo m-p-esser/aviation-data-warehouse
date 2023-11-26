@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "aviation-data-warehouse"
+version = "0.1.0"
+description = ""
+authors = ["Marc-Philipp Esser <m-esser@mail.de>"]
+readme = "README.md"
+packages = [
+    {include = "src"}
+    ]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+prefect = "^2.14.6"
+pandas = "^2.1.3"
+jupyter = "^1.0.0"
+prefect-gcp = "^0.5.2"
+icecream = "^2.1.3"
+python-dotenv = "^1.0.0"
+hydra-core = "^1.3.2"
+flightradarapi = "^1.3.10"
+pandera = "^0.17.2"
+fastparquet = "^2023.10.1"
+pyarrow = "^14.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.11.0"
+flake8 = "^6.1.0"
+pre-commit = "^3.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
