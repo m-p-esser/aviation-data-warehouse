@@ -6,7 +6,7 @@ setup-prefect: ## Setup Prefect
 
 
 .PHONY: update-prefect-blocks
-create-prefect-blocks: ## Create Prefect Blocks
+create-prefect-blocks: ## Create/Update Prefect Blocks
 	@"$(MAKE)" env-init
 	@echo "Registering/Updating Prefect Blocks"
 	prefect block register --file src/prefect/blocks/create_flightapi_api_key.py
