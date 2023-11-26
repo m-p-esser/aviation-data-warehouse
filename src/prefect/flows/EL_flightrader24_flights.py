@@ -86,7 +86,7 @@ def load_df_to_gcs_bucket(flights_df: pd.DataFrame):
 
 
 @flow
-def extract_flightradar24_flights():
+def extract_load_flightradar24_flights():
     """Extract Flights from Flightrader24 API and load them into a GCS Bucket"""
     api_client = construct_api_client()
     flights = get_flights(api_client)
@@ -96,4 +96,4 @@ def extract_flightradar24_flights():
 
 
 if __name__ == "__main__":
-    extract_flightradar24_flights()
+    extract_load_flightradar24_flights()
