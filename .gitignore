@@ -103,4 +103,4 @@ notebooks/*
 deployments/*
 
 # Prefect
-*prefect/
+.prefect/
