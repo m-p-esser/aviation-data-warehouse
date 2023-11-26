@@ -137,7 +137,7 @@ As mentioned above, this project requires a Prefect account and access to the Pr
 
 ### Setup Infrastructure
 Setup the storage infrastructure by running
-- cd `src/infra`
+- cd `src/infrastructure`
 - When running for the first time `terraform init`
 - `terraform plan`
 - `terraform apply`. Confirm by typing *"yes"*
