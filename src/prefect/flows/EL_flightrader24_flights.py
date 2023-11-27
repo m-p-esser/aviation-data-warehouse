@@ -73,13 +73,15 @@ def load_df_to_gcs_bucket(flights_df: pd.DataFrame):
     logger = get_run_logger()
 
     contents = flights_df.to_parquet(engine="pyarrow")
-    today = datetime.datetime.today().strftime("%Y-%m-%d")
+    contents["requested_at"] = pd.to_datetime(datetime.datetime.now())
+    rounded_datetime_str = datetime.datetime.now().strftime("%Y-%m-%d %h-%m-%s")
+
     env_vars = load_env_vars()
 
     blob = upload_blob_from_memory(
         bucket_name=f"flightrader24-flights-{env_vars['ENV']}",
         contents=contents,
-        destination_blob_name=f"flights-{today}.parquet",
+        destination_blob_name=f"flights-{rounded_datetime_str}.parquet",
         gcp_credential_block_name=f"{env_vars['GCP_PROJECT_ID']}-{env_vars['GCP_DEPLOYMENT_SERVICE_ACCOUNT']}",
     )
     logger.info(f"Created Blob '{blob}'")
