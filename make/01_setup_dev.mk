@@ -14,8 +14,6 @@ env-init: # Init environment based on currently active Git branch
 	@echo "The current branch is: $(current_branch)"
 	poetry run python -c "from src.utils import update_env_based_on_git_branch; update_env_based_on_git_branch('$(current_branch)')"
 	@echo "Updated .env file"
-	source .env
-	@echo "Loaded Environment variables into Shell session"
 
 
 .PHONY: prefect-init
