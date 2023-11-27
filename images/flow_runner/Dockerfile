@@ -24,6 +24,6 @@ ADD .secrets .secrets
 # ################################
 
 RUN python3 -m venv ./venv
-RUN /venv/bin/pip install --no-cache-dir -r requirements.txt
+RUN ./venv/bin/pip install --no-cache-dir -r requirements.txt
 
 ENTRYPOINT ["source", "venv/bin/activate"]
