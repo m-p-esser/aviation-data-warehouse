@@ -152,10 +152,10 @@ Start on `develop`
 
 Move on to `test`
 - Merge with `develop`
-- Deploy Flow by running (ADD INFO HERE)
+- Deploy Flow by running `poetry run make deploy-flow`
 - Run integration test trough a manual Flow run
 - Sync with Bigquery (using existing Flow if you want to sync GCS and Bigquery using a Push pattern)
 
 Move on `prod`
 - Merge with `test`
-- Deploy Flow by running (ADD INFO HERE)
+- Deploy Flow by running `poetry run make deploy-flow`
