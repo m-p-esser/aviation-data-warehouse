@@ -10,10 +10,3 @@ create-prefect-artifact-repository: ## Create GCP Artificat Repository for Prefe
 	gcloud artifacts repositories create prefect-$(ENV) --repository-format DOCKER --location $(GCP_DEFAULT_REGION)
 	gcloud auth configure-docker \
 		$(GCP_DEFAULT_REGION)-docker.pkg.dev
-
-
-.PHONY: create-or-update-ressources
-create-or-update-ressources: ## Create or Update ressources using Terraform
-	@"$(MAKE)" make env-init
-	terraform plan
-	terraform apply
