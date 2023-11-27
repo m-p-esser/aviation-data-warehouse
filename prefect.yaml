@@ -3,33 +3,36 @@
 # control along with your flow code.
 
 # Generic metadata about this project
-prefect-version: '{{ prefect.blocks.string.aviation-data-warehouse-prefect-version }}'
-python-version: '{{ prefect.blocks.string.aviation-data-warehouse-python-version }}'
-gcp-project-id: '{{ prefect.blocks.string.aviation-data-warehouse-gcp-project-id }}'
-gcp-default-region: '{{ prefect.blocks.string.aviation-data-warehouse-gcp-default-region }}'
+name:
 
 # build section allows you to manage and build docker images
 build:
-- prefect_docker.deployments.steps.build_docker_image:
-    id: build-image
-    requires: prefect-docker>=0.3.1
-    dockerfile: images/flow_runner/Dockerfile
-    image_name: '{{ gcp-default-region }}.pkg.dev/{{ gcp-project-id }}/prefect-dev/prefect'
-    tag: 2.13.0-python3.10
-      # buildargs:
-      #   PYTHON_VERSION: '{{ $PYTHON_VERSION }}'
+  - prefect.deployments.steps.run_shell_script:
+      id: show-env-vars
+      script: printenv
+      stream_output: true
+  - prefect_docker.deployments.steps.build_docker_image:
+      id: build-image
+      requires: prefect-docker>=0.3.1
+      dockerfile: images/flow_runner/Dockerfile
+      image_name: '{{ $GCP_DEFAULT_REGION }}-docker.pkg.dev/{{ $GCP_PROJECT_ID }}/prefect-{{ $ENV }}/prefect'
+      tag: '{{ $PREFECT_VERSION }}-python{{ $PYTHON_VERSION }}'
+      buildargs:
+        GCP_PROJECT_ID: '{{ $GCP_PROJECT_ID }}'
+        PYTHON_VERSION: '{{ $PYTHON_VERSION }}'
+        PREFECT_VERSION: '{{ $PREFECT_VERSION }}'
 
 # push section allows you to manage if and how this project is uploaded to remote locations
 push:
-- prefect_docker.deployments.steps.push_docker_image:
-    requires: prefect-docker>=0.3.1
-    image_name: '{{ build-image.image_name }}'
-    tag: '{{ build-image.tag }}'
+  - prefect_docker.deployments.steps.push_docker_image:
+      requires: prefect-docker>=0.3.1
+      image_name: '{{ build-image.image_name }}'
+      tag: '{{ build-image.tag }}'
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
-- prefect.deployments.steps.set_working_directory:
-    directory: /opt/prefect/aviation-data-warehouse
+  - prefect.deployments.steps.set_working_directory:
+      directory: '/opt/prefect/{{ $GCP_PROJECT_ID }}'
 
 # @see https://docs.prefect.io/2.13.7/guides/prefect-deploy/?h=prefect.yaml#reusing-configuration-across-deployments
 definitions:
@@ -50,14 +53,13 @@ definitions:
       job_variables:
         image: '{{ build-image.image }}'
 
-
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: EL-flightradar24-flights-dev
-  version:
-  tags: []
-  description: Extract Flights from Flightrader24 API and load them into a GCS Bucket
-  schedule:
-  entrypoint: src/prefect/flows/EL_flightrader24_flights.py:extract_load_flightradar24_flights
-  parameters: {}
-  work_pool: *gcr_push_work_pool_dev
+  - name: EL-flightradar24-flights-dev
+    version:
+    tags: []
+    description: Extract Flights from Flightrader24 API and load them into a GCS Bucket
+    schedule:
+    entrypoint: src/prefect/flows/EL_flightrader24_flights.py:extract_load_flightradar24_flights
+    parameters: {}
+    work_pool: *gcr_push_work_pool_dev
