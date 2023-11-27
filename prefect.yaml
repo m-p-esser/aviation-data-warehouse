@@ -37,18 +37,18 @@ pull:
 # @see https://docs.prefect.io/2.13.7/guides/prefect-deploy/?h=prefect.yaml#reusing-configuration-across-deployments
 definitions:
   work_pools:
-    gcr_push_work_pool_dev: &gcr_push_work_pool_dev
-      name: aviation-data-warehouse-gcr-push-work-pool-dev
+    gcr_push_work_pool: &gcr_push_work_pool_dev
+      name: 'aviation-data-warehouse-gcr-push-work-pool-dev'
       work_queue_name:
       job_variables:
-        image: "{{ build-image.image }}"
+        image: '{{ build-image.image }}'
     gcr_push_work_pool_test: &gcr_push_work_pool_test
-      name: &aviation-data-warehouse-gcr-push-work-pool-test
+      name: aviation-data-warehouse-gcr-push-work-pool-test
       work_queue_name:
       job_variables:
-        image: "{{ build-image.image }}"
+        image: '{{ build-image.image }}'
     gcr_push_work_pool_prod: &gcr_push_work_pool_prod
-      name: &aviation-data-warehouse-gcr-push-work-pool-prod
+      name: aviation-data-warehouse-gcr-push-work-pool-prod
       work_queue_name:
       job_variables:
         image: '{{ build-image.image }}'
