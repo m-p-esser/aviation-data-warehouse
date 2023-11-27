@@ -66,14 +66,16 @@ enable-gcp-services: ## Enable GCP services
 
 .PHONY: bind-iam-policies-to-deployment-service-account
 bind-iam-policies-to-deployment-service-account: ## Bind IAM Policies to Service Account
+	@echo "Set main account as default account"
+	gcloud config set account $(GCP_MAIN_ACCOUNT)	
 	@echo "Bind IAM Policies to Service account $(GCP_DEPLOYMENT_SERVICE_ACCOUNT)"
-	for role in artifactregistry.admin iam.serviceAccountUser storage.objectAdmin storage.admin bigquery.admin pubsub.admin compute.admin; do \
+	for role in artifactregistry.admin iam.serviceAccountUser storage.objectAdmin storage.admin bigquery.admin pubsub.admin compute.admin run.admin; do \
 		gcloud projects add-iam-policy-binding $(GCP_PROJECT_ID) --member=serviceAccount:$(GCP_DEPLOYMENT_SERVICE_ACCOUNT)@$(GCP_PROJECT_ID).iam.gserviceaccount.com --role="roles/$$role"; \
 		echo $$role assigned to Service Account $(GCP_DEPLOYMENT_SERVICE_ACCOUNT); \
 	done 
 # Grant your Google Account a role that lets you use the service account's roles and attach the service account to other resources:
 	gcloud iam service-accounts add-iam-policy-binding $(GCP_DEPLOYMENT_SERVICE_ACCOUNT)@$(GCP_PROJECT_ID).iam.gserviceaccount.com --member="user:emarcphilipp@gmail.com" --role=roles/iam.serviceAccountUser
-
+	@"$(MAKE)" set-deployment-service-account-as-default
 
 .PHONY: set-deployment-service-account-as-default
 set-deployment-service-account-as-default: ## Set Deployment Service Account as default
