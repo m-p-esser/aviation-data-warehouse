@@ -130,6 +130,7 @@ If this doesn't work, run the commands from `00_setup_gcp.mk` command by command
 ### Environment Setup
 *necessary everytime you start working on the project*
 - `make dev-init` to setup development environment
+- source .env (This is not possible directly from a Makefile)
 
 ### Prefect Setup
 As mentioned above, this project requires a Prefect account and access to the Prefect Cloud
