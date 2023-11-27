@@ -41,12 +41,12 @@ definitions:
       name: aviation-data-warehouse-gcr-push-work-pool-dev
       work_queue_name:
       job_variables:
-        image: '{{ build-image.image }}'
+        image: "{{ build-image.image }}"
     gcr_push_work_pool_test: &gcr_push_work_pool_test
       name: &aviation-data-warehouse-gcr-push-work-pool-test
       work_queue_name:
       job_variables:
-        image: '{{ build-image.image }}'
+        image: "{{ build-image.image }}"
     gcr_push_work_pool_prod: &gcr_push_work_pool_prod
       name: &aviation-data-warehouse-gcr-push-work-pool-prod
       work_queue_name:
