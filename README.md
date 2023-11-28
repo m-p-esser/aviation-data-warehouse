@@ -152,10 +152,14 @@ Start on `develop`
 
 Move on to `test`
 - Merge with `develop`
+- Run `make env-init`
+- Run `export $(grep -v '^#' .env | xargs)`
 - Deploy Flow by running `make deploy-flow`
 - Run integration test trough a manual Flow run
 - Sync with Bigquery (using existing Flow if you want to sync GCS and Bigquery using a Push pattern)
 
 Move on `prod`
 - Merge with `test`
+- Run `make env-init`
+- Run `export $(grep -v '^#' .env | xargs)`
 - Deploy Flow by running `make deploy-flow`
