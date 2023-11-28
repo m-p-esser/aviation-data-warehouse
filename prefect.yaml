@@ -15,24 +15,24 @@ build:
       id: build-image
       requires: prefect-docker>=0.3.1
       dockerfile: images/flow_runner/Dockerfile
-      image_name: '{{ $GCP_DEFAULT_REGION }}-docker.pkg.dev/{{ $GCP_PROJECT_ID }}/prefect-{{ $ENV }}/prefect'
-      tag: '{{ $PREFECT_VERSION }}-python{{ $PYTHON_VERSION }}'
+      image_name: "{{ $GCP_DEFAULT_REGION }}-docker.pkg.dev/{{ $GCP_PROJECT_ID }}/prefect-{{ $ENV }}/prefect"
+      tag: "{{ $PREFECT_VERSION }}-python{{ $PYTHON_VERSION }}"
       buildargs:
-        GCP_PROJECT_ID: '{{ $GCP_PROJECT_ID }}'
-        PYTHON_VERSION: '{{ $PYTHON_VERSION }}'
-        PREFECT_VERSION: '{{ $PREFECT_VERSION }}'
+        GCP_PROJECT_ID: "{{ $GCP_PROJECT_ID }}"
+        PYTHON_VERSION: "{{ $PYTHON_VERSION }}"
+        PREFECT_VERSION: "{{ $PREFECT_VERSION }}"
 
 # push section allows you to manage if and how this project is uploaded to remote locations
 push:
   - prefect_docker.deployments.steps.push_docker_image:
       requires: prefect-docker>=0.3.1
-      image_name: '{{ build-image.image_name }}'
-      tag: '{{ build-image.tag }}'
+      image_name: "{{ build-image.image_name }}"
+      tag: "{{ build-image.tag }}"
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
   - prefect.deployments.steps.set_working_directory:
-      directory: '/opt/prefect/{{ $GCP_PROJECT_ID }}'
+      directory: "/opt/prefect/{{ $GCP_PROJECT_ID }}"
 
 # @see https://docs.prefect.io/2.13.7/guides/prefect-deploy/?h=prefect.yaml#reusing-configuration-across-deployments
 definitions:
@@ -41,17 +41,17 @@ definitions:
       name: aviation-data-warehouse-gcr-push-work-pool-dev
       work_queue_name:
       job_variables:
-        image: '{{ build-image.image }}'
+        image: "{{ build-image.image }}"
     gcr_push_work_pool_test: &gcr_push_work_pool_test
       name: aviation-data-warehouse-gcr-push-work-pool-test
       work_queue_name:
       job_variables:
-        image: '{{ build-image.image }}'
+        image: "{{ build-image.image }}"
     gcr_push_work_pool_prod: &gcr_push_work_pool_prod
       name: aviation-data-warehouse-gcr-push-work-pool-prod
       work_queue_name:
       job_variables:
-        image: '{{ build-image.image }}'
+        image: "{{ build-image.image }}"
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
@@ -70,6 +70,8 @@ deployments:
     tags: []
     description: Extract Flights from Flightrader24 API and load them into a GCS Bucket
     schedule:
+      cron: "*/30 * * * *" # every N min
+      timezone: "Europe/Berlin"
     entrypoint: src/prefect/flows/EL_flightrader24_flights.py:extract_load_flightradar24_flights
     parameters: {}
     work_pool: *gcr_push_work_pool_test
