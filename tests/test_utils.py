@@ -23,7 +23,8 @@ def test_load_env_vars_successfully():
 def test_update_env_based_on_git_branch_sucessfully():
     test_file_name = "test.env"
 
-    shutil.copy(".env", test_file_name)
+    with open(test_file_name, "w") as f:
+        f.write("ENV=dev")
 
     update_env_based_on_git_branch("master", test_file_name)
 
