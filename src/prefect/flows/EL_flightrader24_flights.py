@@ -72,9 +72,9 @@ def load_df_to_gcs_bucket(flights_df: pd.DataFrame):
 
     logger = get_run_logger()
 
+    flights_df["requested_at"] = pd.to_datetime(datetime.datetime.now())
     contents = flights_df.to_parquet(engine="pyarrow")
-    contents["requested_at"] = pd.to_datetime(datetime.datetime.now())
-    rounded_datetime_str = datetime.datetime.now().strftime("%Y-%m-%d %h-%m-%s")
+    rounded_datetime_str = datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
 
     env_vars = load_env_vars()
 
