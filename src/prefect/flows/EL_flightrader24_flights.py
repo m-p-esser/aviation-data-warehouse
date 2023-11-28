@@ -7,7 +7,6 @@ import pandas as pd
 from FlightRadar24 import FlightRadar24API
 from prefect.artifacts import create_table_artifact
 from prefect.logging import get_run_logger
-from prefect.task_runners import SequentialTaskRunner
 from prefect import flow, task
 from prefect.blocks.system import Secret
 from src.gcs import upload_blob_from_memory
@@ -62,8 +61,9 @@ def store_flights_in_df(flights: list[dict]) -> pd.DataFrame:
 def validate_flights(flights_df: pd.DataFrame):
     """Validate Data of Flights Dataframe"""
     logger = get_run_logger()
-    FlightsSchema.validate(flights_df)
+    validation = FlightsSchema.validate(flights_df)
     logger.info("Flights Data has been validated sucessfully")
+    return validation
 
 
 @task
@@ -87,14 +87,14 @@ def load_df_to_gcs_bucket(flights_df: pd.DataFrame):
     logger.info(f"Created Blob '{blob}'")
 
 
-@flow(task_runner=SequentialTaskRunner())
+@flow()
 def extract_load_flightradar24_flights():
     """Extract Flights from Flightrader24 API and load them into a GCS Bucket"""
     api_client = construct_api_client()
     flights = get_flights(api_client)
     flights_df = store_flights_in_df(flights)
-    validate_flights(flights_df)
-    load_df_to_gcs_bucket(flights_df)
+    validation = validate_flights(flights_df)
+    load_df_to_gcs_bucket(flights_df, wait_for=[validation])
 
 
 if __name__ == "__main__":
