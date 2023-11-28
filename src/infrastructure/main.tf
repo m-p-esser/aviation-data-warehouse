@@ -1,4 +1,9 @@
-resource "google_storage_bucket" "flights" {
-  name     = format("%s-%s", "flightrader24-flights", var.env)
+resource "google_storage_bucket" "flights-dev" {
+  name     = format("%s-%s", "flightrader24-flights", "dev")
+  location = var.gcp_default_region
+}
+
+resource "google_storage_bucket" "flights-test" {
+  name     = format("%s-%s", "flightrader24-flights", "test")
   location = var.gcp_default_region
 }
