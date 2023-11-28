@@ -12,7 +12,7 @@ dev-init:
 env-init: # Init environment based on currently active Git branch
 	@$(eval current_branch=`git branch --show-current`)
 	@echo "The current branch is: $(current_branch)"
-	poetry run python -c "from src.utils import update_env_based_on_git_branch; update_env_based_on_git_branch('$(current_branch)')"
+	poetry run python -c "from src.utils import update_env_based_on_git_branch; update_env_based_on_git_branch('$(current_branch)', '.env')"
 	@echo "Updated .env file"
 
 
