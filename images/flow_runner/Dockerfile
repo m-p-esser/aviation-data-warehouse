@@ -23,7 +23,8 @@ ADD .secrets .secrets
 # # Install Project dependencies
 # ################################
 
-RUN python3 -m venv ./venv
-RUN ./venv/bin/pip install --no-cache-dir -r requirements.txt
+# RUN python3 -m venv ./venv
+# RUN ./venv/bin/pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT ["source", "venv/bin/activate"]
+# ENTRYPOINT ["source", "venv/bin/activate"]
