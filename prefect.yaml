@@ -38,7 +38,7 @@ pull:
 definitions:
   work_pools:
     gcr_push_work_pool: &gcr_push_work_pool_dev
-      name: 'aviation-data-warehouse-gcr-push-work-pool-dev'
+      name: aviation-data-warehouse-gcr-push-work-pool-dev
       work_queue_name:
       job_variables:
         image: '{{ build-image.image }}'
@@ -55,6 +55,7 @@ definitions:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
+  # Dev Deployments
   - name: EL-flightradar24-flights-dev
     version:
     tags: []
