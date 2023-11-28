@@ -7,7 +7,7 @@ import pandas as pd
 from FlightRadar24 import FlightRadar24API
 from prefect.artifacts import create_table_artifact
 from prefect.logging import get_run_logger
-
+from prefect.task_runners import SequentialTaskRunner
 from prefect import flow, task
 from prefect.blocks.system import Secret
 from src.gcs import upload_blob_from_memory
@@ -87,7 +87,7 @@ def load_df_to_gcs_bucket(flights_df: pd.DataFrame):
     logger.info(f"Created Blob '{blob}'")
 
 
-@flow
+@flow(task_runner=SequentialTaskRunner())
 def extract_load_flightradar24_flights():
     """Extract Flights from Flightrader24 API and load them into a GCS Bucket"""
     api_client = construct_api_client()
