@@ -93,10 +93,10 @@ def load_df_to_gcs_bucket(flights_df: pd.DataFrame, requested_at: datetime.datet
 def extract_load_flightradar24_flights():
     """Extract Flights from Flightrader24 API and load them into a GCS Bucket"""
     api_client = construct_api_client()
-    flights = get_flights(api_client)
-    flights_df = store_flights_in_df(flights)
+    flights, requested_at = get_flights(api_client)
+    flights_df = store_flights_in_df(flights, requested_at)
     validation = validate_flights(flights_df)
-    load_df_to_gcs_bucket(flights_df, wait_for=[validation])
+    load_df_to_gcs_bucket(flights_df, requested_at, wait_for=[validation])
 
 
 if __name__ == "__main__":
