@@ -55,7 +55,6 @@ definitions:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-
   # Dev Environment
   - name: EL-flightradar24-flights-dev
     version:
@@ -86,6 +85,6 @@ deployments:
     schedule:
       cron: "*/30 * * * *" # every N min
       timezone: "Europe/Berlin"
-    entrypoint: src/prefect/flows/EL_flightrader24_flights.py:extract_load_flightradar24_flights
+    entrypoint: src/prefect/flows/EL_flightradar24_flights.py:extract_load_flightradar24_flights
     parameters: {}
     work_pool: *gcr_push_work_pool_prod
