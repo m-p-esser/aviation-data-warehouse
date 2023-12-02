@@ -81,7 +81,7 @@ def load_df_to_gcs_bucket(flights_df: pd.DataFrame, requested_at: datetime.datet
     env_vars = load_env_vars()
 
     blob = upload_blob_from_memory(
-        bucket_name=f"flightrader24-flights-{env_vars['ENV']}",
+        bucket_name=f"flightradar24-flights-{env_vars['ENV']}",
         contents=contents,
         destination_blob_name=f"flights-{rounded_datetime_str}.parquet",
         gcp_credential_block_name=f"{env_vars['GCP_PROJECT_ID']}-{env_vars['GCP_DEPLOYMENT_SERVICE_ACCOUNT']}",
