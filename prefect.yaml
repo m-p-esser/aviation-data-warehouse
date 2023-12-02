@@ -72,8 +72,6 @@ deployments:
     tags: []
     description: Extract Flights from Flightrader24 API and load them into a GCS Bucket
     schedule:
-      cron: "*/30 * * * *" # every N min
-      timezone: "Europe/Berlin"
     entrypoint: src/prefect/flows/EL_flightradar24_flights.py:extract_load_flightradar24_flights
     parameters: {}
     work_pool: *gcr_push_work_pool_test
