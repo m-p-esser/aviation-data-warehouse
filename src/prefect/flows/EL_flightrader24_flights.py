@@ -14,7 +14,7 @@ from src.schema.raw import FlightsSchema
 from src.utils import load_env_vars
 
 
-@task(log_prints=True)
+@task
 def construct_api_client() -> FlightRadar24API:
     """Create FlightRadar24 API Client"""
     env_vars = load_env_vars()
@@ -89,7 +89,10 @@ def load_df_to_gcs_bucket(flights_df: pd.DataFrame, requested_at: datetime.datet
     logger.info(f"Created Blob '{blob}'")
 
 
-@flow()
+@flow(
+    retries=3,
+    retry_delay_seconds=5
+)
 def extract_load_flightradar24_flights():
     """Extract Flights from Flightrader24 API and load them into a GCS Bucket"""
     api_client = construct_api_client()
