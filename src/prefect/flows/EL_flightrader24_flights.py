@@ -70,14 +70,13 @@ def validate_flights(flights_df: pd.DataFrame):
 
 
 @task
-def load_df_to_gcs_bucket(flights_df: pd.DataFrame):
+def load_df_to_gcs_bucket(flights_df: pd.DataFrame, requested_at: datetime.datetime):
     """Store Flights in GCS Bucket"""
 
     logger = get_run_logger()
 
-    flights_df["requested_at"] = pd.to_datetime(datetime.datetime.now())
     contents = flights_df.to_parquet(engine="pyarrow")
-    rounded_datetime_str = datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    rounded_datetime_str = requested_at.strftime("%Y-%m-%d-%H:%M:%S")
 
     env_vars = load_env_vars()
 
