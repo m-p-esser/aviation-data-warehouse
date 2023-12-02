@@ -6,13 +6,9 @@ from pandera.typing import Series
 
 # @see https://pandera.readthedocs.io/en/stable/dataframe_models.html
 class FlightsSchema(pa.DataFrameModel):
-    latitude: Series[
-        pa.Float
-    ]  # = pa.Field(in_range={"min_value": -180, "max_value": 180})
-    longitude: Series[
-        pa.Float
-    ]  # = pa.Field(in_range={"min_value": -180, "max_value": 180})
-    id: Series[pa.String] = pa.Field(unique=True)
+    latitude: Series[pa.Float]
+    longitude: Series[pa.Float]
+    id: Series[pa.String]
     icao_24bit: Series[pa.String]
     heading: Series[pa.Int]
     altitude: Series[pa.Int]
@@ -25,7 +21,7 @@ class FlightsSchema(pa.DataFrameModel):
     destination_airport_iata: Series[pa.String]
     number: Series[pa.String]
     airline_iata: Series[pa.String]
-    on_ground: Series[pa.Int] = pa.Field(isin=[0, 1])
+    on_ground: Series[pa.Int]
     vertical_speed: Series[pa.Int]
     callsign: Series[pa.String]
     airline_icao: Series[pa.String]
