@@ -36,7 +36,7 @@ def get_flights(api_client: FlightRadar24API) -> tuple[list[dict], datetime.date
     flights = api_client.get_flights(details=False)
     flights = [f.__dict__ for f in flights]
     requested_at = datetime.datetime.now()
-    logger.info(f"Requested Flights24 at {requested_at.strftime("%Y-%m-%d-%H:%M:%S")}")
+    logger.info(f"Requested Flights24 at {requested_at.strftime('%Y-%m-%d-%H:%M:%S')}")
     logger.info(f"Response from Flightradar24 contains {len(flights)} flights")
 
     return (flights, requested_at)
