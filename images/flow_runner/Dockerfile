@@ -25,5 +25,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy Files and Directories
 ################################
 
-COPY src ./
-COPY .secrets .secrets
+COPY src .
+COPY .secrets .
