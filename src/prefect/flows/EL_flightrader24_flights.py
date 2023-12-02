@@ -34,7 +34,7 @@ def get_flights(api_client: FlightRadar24API) -> list[dict]:
     """Request Flights from Flightradar"""
 
     logger = get_run_logger()
-    flights = api_client.get_flights()
+    flights = api_client.get_flights(details=False)
     flights = [f.__dict__ for f in flights]
     logger.info(f"Response from Flightradar contains {len(flights)} flights")
 
