@@ -3,28 +3,27 @@
 
 ################################
 ARG PYTHON_VERSION
-ARG PREFECT_VERSION
 
-FROM prefecthq/prefect:${PREFECT_VERSION}-python${PYTHON_VERSION}
+FROM python:${PYTHON_VERSION}-slim-bookworm 
 
 ################################
-# Copy Files and Directories
+# Init Work Dir
 ################################
 
 ARG GCP_PROJECT_ID
 
 WORKDIR /opt/prefect/${GCP_PROJECT_ID}
 
+################################
+# Install Project dependencies
+################################
+
 COPY requirements.txt .env ./
-ADD src src
-ADD .secrets .secrets
+RUN pip install --no-cache-dir -r requirements.txt
 
-# ################################
-# # Install Project dependencies
-# ################################
+################################
+# Copy Files and Directories
+################################
 
-# RUN python3 -m venv ./venv
-# RUN ./venv/bin/pip install --no-cache-dir -r requirements.txt
-RUN pip install -r requirements.txt
-
-# ENTRYPOINT ["source", "venv/bin/activate"]
+COPY src ./
+COPY .secrets .secrets
