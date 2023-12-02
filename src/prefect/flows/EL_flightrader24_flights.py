@@ -29,23 +29,26 @@ def construct_api_client() -> FlightRadar24API:
 
 
 @task
-def get_flights(api_client: FlightRadar24API) -> list[dict]:
-    """Request Flights from Flightradar"""
+def get_flights(api_client: FlightRadar24API) -> tuple[list[dict], datetime.datetime]:
+    """Request Flights from Flightradar24"""
 
     logger = get_run_logger()
     flights = api_client.get_flights(details=False)
     flights = [f.__dict__ for f in flights]
-    logger.info(f"Response from Flightradar contains {len(flights)} flights")
+    requested_at = datetime.datetime.now()
+    logger.info(f"Requested Flights24 at {requested_at.strftime("%Y-%m-%d-%H:%M:%S")}")
+    logger.info(f"Response from Flightradar24 contains {len(flights)} flights")
 
-    return flights
+    return (flights, requested_at)
 
 
 @task
-def store_flights_in_df(flights: list[dict]) -> pd.DataFrame:
+def store_flights_in_df(flights: list[dict], requested_at: datetime.datetime) -> pd.DataFrame:
     """Store Flights in Dataframe"""
 
     logger = get_run_logger()
     flights_df = pd.DataFrame(flights)
+    flights_df["requested_at"] = pd.to_datetime(requested_at)
     create_table_artifact(key=str(uuid.uuid4()), table=flights)
     logger.info(
         f"Dataframe contains: {flights_df.shape[0]} rows and {flights_df.shape[1]} columns"
