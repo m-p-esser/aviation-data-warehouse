@@ -55,7 +55,6 @@ definitions:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-
   # Dev Environment
   - name: EL-flightradar24-flights-dev
     version:
