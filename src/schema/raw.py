@@ -4,24 +4,26 @@ import pandera as pa
 from pandera.typing import Series
 
 
+# @see https://pandera.readthedocs.io/en/stable/dataframe_models.html
 class FlightsSchema(pa.DataFrameModel):
     latitude: Series[
-        float
+        pa.Float
     ]  # = pa.Field(in_range={"min_value": -180, "max_value": 180})
     longitude: Series[
-        float
+        pa.Float
     ]  # = pa.Field(in_range={"min_value": -180, "max_value": 180})
-    id: Series[str] = pa.Field(unique=True)
-    icao_24bit: Series[str]
-    heading: Series[int]
-    altitude: Series[int]
-    ground_speed: Series[int]
-    squawk: Series[str]
-    aircraft_code: Series[str]
-    registration: Series[str]
-    time: Series[int]
-    origin_airport_iata: Series[str]
-    destination_airport_iata: Series[str]
-    number: Series[str]
-    airline_iata: Series[str]
-    on_ground: Series[int] = pa.Field(isin=[0, 1])
+    id: Series[pa.String] = pa.Field(unique=True)
+    icao_24bit: Series[pa.String]
+    heading: Series[pa.String]
+    altitude: Series[pa.String]
+    ground_speed: Series[pa.String]
+    squawk: Series[pa.String]
+    aircraft_code: Series[pa.String]
+    registration: Series[pa.String]
+    time: Series[pa.String]
+    origin_airport_iata: Series[pa.String]
+    destination_airport_iata: Series[pa.String]
+    number: Series[pa.String]
+    airline_iata: Series[pa.String]
+    on_ground: Series[pa.Int] = pa.Field(isin=[0, 1])
+    requested_at: Series[pa.DateTime]
