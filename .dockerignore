@@ -90,3 +90,8 @@ common_crawl.egg-info
 
 # Experimental files to try new Python functionality
 src/experimental
+
+# DBT
+target/
+dbt_packages/
+logs/

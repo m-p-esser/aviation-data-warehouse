@@ -104,3 +104,8 @@ deployments/*
 
 # Prefect
 .prefect/
+
+# DBT
+target/
+dbt_packages/
+logs/
