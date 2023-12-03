@@ -18,7 +18,7 @@ resource "google_storage_bucket" "flights-test" {
   name     = format("%s-%s", "flightradar24-flights", "test")
   location = var.gcp_default_region
 
-    lifecycle_rule {
+  lifecycle_rule {
     condition {
       age = 30
     }
@@ -110,6 +110,19 @@ resource "google_bigquery_table" "flights-dev" {
   }
 }
 
+resource "google_bigquery_table" "airports-dev" {
+  dataset_id  = "dev"
+  table_id    = "airports"
+  description = "Information about Airports sourced Flightrader24"
+
+  external_data_configuration {
+    autodetect    = true
+    source_format = "PARQUET"
+    source_uris   = [format("%s://%s/%s.%s", "gs", "flightradar24-airports-dev", "airports-*", "parquet")]
+  }
+}
+
+
 resource "google_bigquery_dataset" "test" {
   dataset_id                 = "test"
   description                = "Schema containing Tables of the Test Environment"
@@ -130,6 +143,18 @@ resource "google_bigquery_table" "flights-test" {
   }
 }
 
+resource "google_bigquery_table" "airports-test" {
+  dataset_id  = "test"
+  table_id    = "airports"
+  description = "Information about Airports sourced Flightrader24"
+
+  external_data_configuration {
+    autodetect    = true
+    source_format = "PARQUET"
+    source_uris   = [format("%s://%s/%s.%s", "gs", "flightradar24-airports-test", "airports-*", "parquet")]
+  }
+}
+
 resource "google_bigquery_dataset" "prod" {
   dataset_id                 = "prod"
   description                = "Schema containing Tables of the Production Environment"
@@ -147,5 +172,17 @@ resource "google_bigquery_table" "flights-prod" {
     autodetect    = true
     source_format = "PARQUET"
     source_uris   = [format("%s://%s/%s.%s", "gs", "flightradar24-flights-prod", "flights-*", "parquet")]
+  }
+}
+
+resource "google_bigquery_table" "airports-prod" {
+  dataset_id  = "prod"
+  table_id    = "airports"
+  description = "Information about Airports sourced Flightrader24"
+
+  external_data_configuration {
+    autodetect    = true
+    source_format = "PARQUET"
+    source_uris   = [format("%s://%s/%s.%s", "gs", "flightradar24-airports-prod", "airports-*", "parquet")]
   }
 }
