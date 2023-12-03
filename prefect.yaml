@@ -112,7 +112,7 @@ deployments:
     tags: []
     description: Extract Airports from Flightrader24 API and load them into a GCS Bucket
     schedule:
-      cron: "*/30 * * * *" # every N min
+      cron: "0 2 * * *" # every day, 2 AM
       timezone: "Europe/Berlin"
     entrypoint: src/prefect/flows/EL_flightradar24_airports.py:extract_load_flightradar24_airports
     parameters: {}
