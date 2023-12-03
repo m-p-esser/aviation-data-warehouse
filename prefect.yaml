@@ -55,25 +55,6 @@ definitions:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-  # Dev Environment
-  - name: EL-flightradar24-flights-dev
-    version:
-    tags: []
-    description: Extract Flights from Flightrader24 API and load them into a GCS Bucket
-    schedule:
-    entrypoint: src/prefect/flows/EL_flightradar24_flights.py:extract_load_flightradar24_flights
-    parameters: {}
-    work_pool: *gcr_push_work_pool_dev
-
-  - name: EL-flightradar24-airports-dev
-    version:
-    tags: []
-    description: Extract Airports from Flightrader24 API and load them into a GCS Bucket
-    schedule:
-    entrypoint: src/prefect/flows/EL_flightradar24_airports.py:extract_load_flightradar24_airports
-    parameters: {}
-    work_pool: *gcr_push_work_pool_dev
-
 
   # Test Environment
   - name: EL-flightradar24-flights-test
