@@ -26,3 +26,13 @@ class FlightsSchema(pa.DataFrameModel):
     callsign: Series[pa.String]
     airline_icao: Series[pa.String]
     requested_at: Series[pa.DateTime]
+
+class AirportsSchema(pa.DataFrameModel):
+    latitude: Series[pa.Float]
+    longitude: Series[pa.Float]
+    altitude: Series[pa.Int]
+    name: Series[pa.String]
+    icao: Series[pa.String]
+    iata: Series[pa.String]
+    country: Series[pa.String]
+    requested_at: Series[pa.DateTime]
