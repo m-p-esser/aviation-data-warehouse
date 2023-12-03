@@ -65,6 +65,16 @@ deployments:
     parameters: {}
     work_pool: *gcr_push_work_pool_dev
 
+  - name: EL-flightradar24-airports-dev
+    version:
+    tags: []
+    description: Extract Airports from Flightrader24 API and load them into a GCS Bucket
+    schedule:
+    entrypoint: src/prefect/flows/EL_flightradar24_airports.py:extract_load_flightradar24_airports
+    parameters: {}
+    work_pool: *gcr_push_work_pool_dev
+
+
   # Test Environment
   - name: EL-flightradar24-flights-test
     version:
@@ -75,6 +85,16 @@ deployments:
     parameters: {}
     work_pool: *gcr_push_work_pool_test
 
+  - name: EL-flightradar24-airports-test
+    version:
+    tags: []
+    description: Extract Airports from Flightrader24 API and load them into a GCS Bucket
+    schedule:
+    entrypoint: src/prefect/flows/EL_flightradar24_airports.py:extract_load_flightradar24_airports
+    parameters: {}
+    work_pool: *gcr_push_work_pool_test
+
+
   # Prod Environment
   - name: EL-flightradar24-flights-prod
     version:
@@ -84,5 +104,16 @@ deployments:
       cron: "*/30 * * * *" # every N min
       timezone: "Europe/Berlin"
     entrypoint: src/prefect/flows/EL_flightradar24_flights.py:extract_load_flightradar24_flights
+    parameters: {}
+    work_pool: *gcr_push_work_pool_prod
+
+  - name: EL-flightradar24-airports-prod
+    version:
+    tags: []
+    description: Extract Airports from Flightrader24 API and load them into a GCS Bucket
+    schedule:
+      cron: "*/30 * * * *" # every N min
+      timezone: "Europe/Berlin"
+    entrypoint: src/prefect/flows/EL_flightradar24_airports.py:extract_load_flightradar24_airports
     parameters: {}
     work_pool: *gcr_push_work_pool_prod
