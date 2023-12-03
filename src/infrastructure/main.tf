@@ -1,18 +1,95 @@
+# GCS Buckets
 resource "google_storage_bucket" "flights-dev" {
   name     = format("%s-%s", "flightradar24-flights", "dev")
   location = var.gcp_default_region
+
+  lifecycle_rule {
+    condition {
+      age = 30
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
 }
 
 resource "google_storage_bucket" "flights-test" {
   name     = format("%s-%s", "flightradar24-flights", "test")
   location = var.gcp_default_region
+
+    lifecycle_rule {
+    condition {
+      age = 30
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
 }
 
 resource "google_storage_bucket" "flights-prod" {
   name     = format("%s-%s", "flightradar24-flights", "prod")
   location = var.gcp_default_region
+
+  lifecycle_rule {
+    condition {
+      age = 30
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
 }
 
+resource "google_storage_bucket" "airports-dev" {
+  name     = format("%s-%s", "flightradar24-airports", "dev")
+  location = var.gcp_default_region
+
+  lifecycle_rule {
+    condition {
+      age = 30
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
+}
+
+resource "google_storage_bucket" "airports-test" {
+  name     = format("%s-%s", "flightradar24-airports", "test")
+  location = var.gcp_default_region
+
+  lifecycle_rule {
+    condition {
+      age = 30
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
+}
+
+resource "google_storage_bucket" "airports-prod" {
+  name     = format("%s-%s", "flightradar24-airports", "prod")
+  location = var.gcp_default_region
+
+  lifecycle_rule {
+    condition {
+      age = 30
+    }
+    action {
+      type = "Delete"
+    }
+  }
+
+}
+
+# BigQuery
 resource "google_bigquery_dataset" "dev" {
   dataset_id                 = "dev"
   description                = "Schema containing Tables of the Development Environment"
