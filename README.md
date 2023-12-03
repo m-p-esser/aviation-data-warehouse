@@ -55,6 +55,7 @@ If you want to build on this projects, here are the prerequisites
 
 - A Google account (to create ressources in GCP)
 - A Prefect account (with access to the Prefect Cloud)
+- A dbt account (with access to the dbt Cloud)
 - Terraform is installed on your machine
 - gcloud CLI is installed on your machine
 - Expects the following Git branches:
